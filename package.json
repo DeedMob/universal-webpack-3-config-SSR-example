@@ -1,0 +1,61 @@
+{
+  "name": "universal-webpack-3-config-SSR-example",
+  "scripts": {
+    "start": "bnr start-prod",
+    "build-prod-client": "bnr build-prod-client",
+    "build-prod-server": "bnr build-prod-server",
+    "build-dev": "bnr build-dev",
+    "start-dev": "bnr start-dev",
+    "watch-client": "bnr watch-client",
+    "dev-nowatch": "concurrently --kill-others \"bnr build-dev\" \"npm run start-dev\"",
+    "dev": "concurrently --kill-others \"npm run build-dev\" \"npm run watch-client\" \"npm run start-dev\""
+  },
+  "betterScripts": {
+    "start-prod": {
+      "command": "node --max-old-space-size=512 ./start-server.babel",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "production",
+        "APIPORT": 3030
+      }
+    },
+    "start-dev": {
+      "command": "nodemon ./start-server.babel --watch ./static/dist/server",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development",
+        "PORT": 3000,
+        "APIPORT": 3030,
+        "WEBPACK_DLLS": 1
+      }
+    },
+    "build-prod-client": {
+      "command": "webpack --colors --display-error-details --config ./webpack.config.client.prod.babel.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "build-prod-server": {
+      "command": "webpack --colors --display-error-details --config ./webpack.config.server.prod.babel.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "watch-client": {
+      "command": "webpack-dev-server --inline --config ./webpack.config.client.dev.babel.js --port 3001 --colors",
+      "env": {
+        "UV_THREADPOOL_SIZE": 100,
+        "NODE_PATH": "./src",
+        "PORT": 3000,
+        "APIPORT": 3030,
+        "WEBPACK_DLLS": 1
+      }
+    },
+    "build-dev": {
+      "command": "webpack --watch --colors --display-error-details --config ./webpack.config.server.dev.babel.js",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  }
+}
