@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import baseConfiguration from './webpack.config.client';
 import SWPrecacheWebpackPlugin from 'sw-precache-webpack-plugin';
 import WebpackPwaManifest from 'webpack-pwa-manifest';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+//import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 import path from 'path';
 // FIXME chunkhash caching
@@ -81,7 +81,7 @@ configuration.plugins.push(
     inject: false,
     fingerprints: false,
   }),
-  new HtmlWebpackPlugin()
+  //new HtmlWebpackPlugin()
 );
 
 export default configuration;
